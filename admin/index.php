@@ -3,9 +3,9 @@
 try {
 
     if ($_GET['pass'] != 123456789) {
-       
-            header('location: ../');
-          exit;
+
+        header('location: ../');
+        exit;
     }
 } catch (PDOException $e) {
     echo json_encode(['error' => true, 'mensagem' => 'Erro no servidor: ' . $e->getMessage()]);
@@ -20,11 +20,8 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>admin</title>
 </head>
 
@@ -36,14 +33,15 @@ try {
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
                 <th scope="col">Senha</th>
+                <th scope="col">Entrada</th>
             </tr>
         </thead>
         <tbody>
             <?php
 
             $conn = new PDO('mysql:host=localhost;dbname=casasbahia', 'root', ''); //conexão e pa^rametros do banco
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//para receber erro
-            
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //para receber erro
+
             try {
 
                 $stmt = $conn->prepare("SELECT * FROM usuario");
@@ -60,12 +58,11 @@ try {
                     echo "<td>";
                     echo $value['senha'];
                     echo "</td>";
-
+                    echo "<td>";
+                    echo $value['entrada'];
+                    echo "</td>";
                     echo "</tr>";
-
                 }
-
-
             } catch (PDOException $e) {
                 echo json_encode(['error' => true, 'mensagem' => 'Erro no servidor: ' . $e->getMessage()]);
             }
